@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: smartscan-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node postgres.js
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: NODE_ENV
+        value: production
