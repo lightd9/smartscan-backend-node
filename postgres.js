@@ -7,21 +7,27 @@ const multer = require('multer');
 
 const app = express();
 app.use(bodyParser.json());
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://10.0.2.2:3000',
+  'https://your-frontend-domain.onrender.com', // 👈 Add this if frontend is hosted
+  'https://your-frontend-domain.vercel.app',   // 👈 Or this if using Vercel/Netlify
+];
+
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://10.0.2.2:3000',
-  ],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
 }));
 
-// Handle preflight requests explicitly
 app.options('*', cors());
-
-
-
 
 
 const port = 5000;
