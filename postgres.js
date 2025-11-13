@@ -16,8 +16,9 @@ require('dotenv').config();
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: {
-        rejectUnauthorized: false,
-    }
+        require: true,
+        rejectUnauthorized: false, // for Render, Neon, etc.
+    },
 });
 
 
