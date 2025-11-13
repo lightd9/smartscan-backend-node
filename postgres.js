@@ -9,13 +9,14 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+
 const port = 5000;
 
 require('dotenv').config();
 
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
+     ssl: {
         require: true,
         rejectUnauthorized: false, // for Render, Neon, etc.
     },
@@ -23,7 +24,7 @@ const client = new Client({
 
 
 client.connect()
-    .then(() => console.log("✅ Connected to Neon database"))
+    .then(() => console.log("✅ Connected to Render database"))
     .catch(err => console.error("❌ Database connection error:", err.stack));
 // auth
 
@@ -100,7 +101,7 @@ app.get('/authAll', async (req, res)=>{
 
 app.post('/auth/:username/:password', async (req, res)=>{
     const {username, password} = req.params;
-    const data =  await client.query(`SELECT * FROM auth WHERE username = '${username}' AND password = '${password}'`);
+    const data = await client.query('SELECT * FROM auth WHERE username = $1 AND password = $2', [username, password]);
     res.send(data.rows);
     console.log("Data sent successfully");
 });
