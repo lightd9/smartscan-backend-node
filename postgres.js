@@ -9,10 +9,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors({
   origin: [
-    '*',
     'http://localhost:3000',
     'http://10.0.2.2:3000',
-    'https://smartscan-backend-node-1.onrender.com'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -21,6 +19,7 @@ app.use(cors({
 
 // Handle preflight requests explicitly
 app.options('*', cors());
+
 
 
 
