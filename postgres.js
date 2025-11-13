@@ -7,7 +7,12 @@ const multer = require('multer');
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
+
+
 
 
 const port = 5000;
